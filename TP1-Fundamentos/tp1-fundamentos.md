@@ -10,6 +10,7 @@ Turing examinó objeciones ante la posibilidad de las máquinas inteligentes:
 #### 1.	Argumento de incapacidad 
 Afirma que ***una máquina nunca puede hacer X***. Como: 
 > Ser amable, tener recursos, ser guapo, simpático, tener iniciativas, tener sentido del humor, distinguir lo correcto de lo erróneo, cometer errores, enamorarse, disfrutar con las fresas con nata, hacer que otra persona también se enamore, aprender de la experiencia, utilizar palabras de forma adecuada, ser el tema de su propio pensamiento, tener tanta diversidad de comportamientos como el hombre, hacer algo realmente nuevo. 
+
 Pero actualmente los computadores juegan ajedrez, comprueban ortografía, conducen, diagnostican enfermedades, y hacen descubrimientos. Además a veces funcionan en tareas que se relacionan con el juicio humano. Paul Meehl estudió los procesos de la toma de decisiones de expertos en tareas como predecir el éxito de un alumno en un programa de formación, o la reincidencia de un delincuente, y además desde 1999 Educational Testing Service ha utilizado un programa automatizado para calificar preguntas de redacciones en el examen GMAT, que concuerda con los examinadores en un 97% (mismo nivel de concordancia entre dos personas).
 Los computadores pueden hacer muchas cosas *tan bien o mejor que el humano*. Pero esto no significa que utilicen la intuición y el entendimiento. También es cierto que existen tareas en donde no sobresalen, como mantener una conversación abierta.
 
