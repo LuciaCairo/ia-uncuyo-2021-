@@ -20,7 +20,7 @@ No, como en el caso anterior, el agente no puede optimizar la cantidad de movimi
 
 **B) ¿Puede un agente reflejo simple con una función de agente aleatoria superar a un agente reflejo simple?**
 
-No, como se vio en el ejercicio tp2-results.md. Tiene mejores resultados el Agente Reflexivo Simple.
+No, tiene mejores resultados el Agente Reflexivo Simple. (tp2.results)
 
 **C) ¿Puede diseñar un entorno en el que su agente asignado al azar tenga un desempeño deficiente? Muestre sus resultados.**
 
