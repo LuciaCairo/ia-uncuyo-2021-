@@ -9,8 +9,7 @@ class Agent:
         # Recibe como parámetro un objeto de la clase Environment
         self.env = env 
         self.life = 1000 #Configurada para realizar mil movimientos
-        #Registro de acciones
-        #self.record = [];
+     
           
     # Accion de ir hacia arriba
     def up(self):
