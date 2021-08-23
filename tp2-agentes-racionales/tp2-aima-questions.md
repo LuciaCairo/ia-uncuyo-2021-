@@ -1,6 +1,6 @@
 # F) Responder preguntas 2.10 y 2.11 de AIMA 3era Edición.
 ### 2.10) Considere una versión modificada del entorno de vacío del ejercicio 2.8, en el que el agente recibe una penalización de un punto por cada movimiento.
-**A) ¿Puede un simple agente reflejo ser perfectamente racional para este entorno? Explicar.**
+**A) ¿Puede un simple agente reflexivo ser perfectamente racional para este entorno? Explicar.**
 
 No puede un simple agente reflejo ser perfectamente racional para este entorno ya que estos agentes seleccionan las acciones en base a las percepciones actuales, ignorando percepciones históricas. Este agente aspiradora toma sus decisiones sólo con base en la localización actual y si ésta está sucia por lo que no puede optimizar la cantidad de movimientos porque no tiene una percepción de como es el ambiente totalmente, puede seguir patrones para ser un poco más eficiente pero no lograra maximizar la medida de rendimiento todo lo posible.
 
