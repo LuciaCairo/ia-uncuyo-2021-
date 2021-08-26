@@ -18,11 +18,11 @@
 
 ### Busqueda Uniforme
 
-**Estados:** []
+**Estados:** [4451, 1285, 4249, 956, 2075, 4776, 1851, 267, 4549, 1892, 3536, 3476, 4082, 5608, 4201, 3277, 3135, 3456, 6207,, 6750, 6758, 2040, 6704, 1140, 4632, 6369, 5735, 298, 5701, 234]
 
-**Media:** 
+**Media:** 3774
 
-**Desviación estandar:**
+**Desviación estandar:** 2006
 
 # EJERCICIO C 
 ## Cuál de los 3 algoritmos considera más adecuado para resolver el problema planteado en A)?. Justificar la respuesta.
