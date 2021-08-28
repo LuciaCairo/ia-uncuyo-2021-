@@ -24,6 +24,25 @@
 
 **Desviación estandar:** 2006
 
+### GRAFICO 1
+![image](https://user-images.githubusercontent.com/88351747/131232723-17a66ca3-ebe3-44ac-89d0-7a66e4e10dd3.png)
+
+**1:** BFS
+
+**2:** DFS
+
+**3:** Uniforme
+
+### GRAFICO 2
+![image](https://user-images.githubusercontent.com/88351747/131232796-e5dac547-6942-46af-ab1d-c143f6fef60e.png)
+
+**1:** BFS
+
+**2:** DFS
+
+**3:** Uniforme
+
+
 # EJERCICIO C 
 ## Cuál de los 3 algoritmos considera más adecuado para resolver el problema planteado en A)?. Justificar la respuesta.
 
