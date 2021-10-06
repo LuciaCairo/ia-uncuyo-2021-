@@ -38,9 +38,15 @@ Se busca no procesar innecesariamente las aristas por lo que se procesan previam
 
 ### 5. Demostrar la correctitud del algoritmo CSP para árboles estructurados (sección 5.4, p. 172 AIMA 2da edición). Para ello, demostrar: 
 
-a) Que para un CSP cuyo grafo de restricciones es un árbol, 2-consistencia (consistencia de arco) implica n-consistencia (siendo n número total de variables)
+#### a) Que para un CSP cuyo grafo de restricciones es un árbol, 2-consistencia (consistencia de arco) implica n-consistencia (siendo n número total de variables)
 
-b) Argumentar por qué lo demostrado en a es suficiente. 
+El algoritmo tiene tres pasos: Generar el árbol estructurado con cualquier variable como la raíz y ordena las variables desde la raíz a las hojas, de modo que el grafo de restricciones tenga nodos padre-hijo (cada nodo tiene solo un padre) con un solo arco entre ellos. Se resuelve la arco-consistencia de la hoja a la raiz eliminando los valores no consistentes de los dominios. Y por ultimo se asignan los valores legales posibles a las variables.
+
+Como solo hay restricciones de a dos (de padre a hijo), gracias a la realizacion del arbol solo se rsuelve la arco-consistencia de las variables en lugar de las n-consistencia.
+
+#### b) Argumentar por qué lo demostrado en a es suficiente. 
+
+Lo argumentado en el ejercicio a es suficiente porque que con resolver las restricciones binarias recorriendo el camino del arbol, llegando a todas las variables se van cunmpliendo las restricciones y llegamos a la solucion.
 
 ### 6. Implementar una solución al problema de las n-reinas utilizando una formulación CSP
 
