@@ -1,0 +1,242 @@
+---
+  title: "PARTE A"
+  output: html_notebook
+---
+  
+```{r}
+
+# Librerias
+install.packages(
+          c("dplyr",
+            "readr",
+            "doParallel", # Only for Windows users
+            "caret",
+            "randomForest",
+            "rpart",
+            "rmarkdown",
+            "rprojroot",
+            "caTools",
+            "bitops",
+            "ggplot2",
+            "e1071"
+            ) 
+)
+
+```
+
+```{r}
+
+# Manipulacion de datasets
+library(dplyr) 
+library(readr)
+
+# Machine Learning
+library(caret)
+
+# Matrices 
+library(ggplot2)
+
+library(rpart)
+
+# Leo los datos
+treedataset <- read_csv("C:/Ciencias de la Computacion/Inteligencia Artificial I/Trabajo Practico 7/arbolado-publico-mendoza-2021/arbolado-mza-dataset.csv")
+str(treedataset)
+trainset <- treedataset
+
+```
+
+```{r}
+###### EJERCICIO 1 ###### 
+
+# 20% del conjunto de datos -> arbolado-publico-mendoza-2021-validation.csv 
+# 80% restante -> arbolado-publico-mendoza-2021-train.csv
+
+trainIndex <- createDataPartition(as.factor(trainset$inclinacion_peligrosa),p=0.80,list=FALSE)
+train.csv <- trainset[ trainIndex, ]
+validation.csv <- trainset[ -trainIndex, ]
+colnames(train.csv) <- make.names(colnames(train.csv)) # colnames: devuelve el nombre de las columnas de una matriz
+colnames(validation.csv) <- make.names(colnames(validation.csv)) # make.names: cambiar a nombres validos
+write.csv(validation.csv,"arbolado-publico-mendoza-2021-validation.csv")
+write.csv(train.csv,"arbolado-publico-mendoza-2021-train.csv")
+# train.csv
+
+```
+
+```{r}
+###### EJERCICIO 2 ######
+
+train.csv<-train.csv %>% mutate(inclinacion_peligrosa=ifelse(inclinacion_peligrosa=='1','Si','No'))
+train.csv$inclinacion_peligrosa <-as.factor(train.csv$inclinacion_peligrosa)
+
+
+# ¿Cual es la distribución de las clase inclinacion_peligrosa?
+train.csv %>%  group_by(inclinacion_peligrosa) %>% summarise(total=n()) # Agrupar y hacer resumen (cant inclinacion_peligrosa)
+ggplot(train.csv)+
+  geom_bar(aes(x=as.factor(inclinacion_peligrosa),fill=as.factor(inclinacion_peligrosa)))+
+  theme_dark()
+
+# ¿Se puede considerar alguna sección más peligrosa que otra?
+# Agrupar y hacer resumen (cant inclinacion_peligrosa segun seccion)
+
+inc_x_secc<-train.csv %>% filter(inclinacion_peligrosa == 1) %>% group_by(nombre_seccion) %>% summarise(total=n())
+inc_x_secc
+
+
+ggplot(train.csv)+
+  geom_bar(aes(x=as.factor(inclinacion_peligrosa),fill=as.factor(inclinacion_peligrosa)))+
+  theme_dark()+
+  facet_wrap(~nombre_seccion)
+
+# Se puede considerar alguna especie más peligrosa que otra?
+# Agrupar y hacer resumen (cant inclinacion_peligrosa segun especie)
+inc_x_esp<-train.csv %>% filter(inclinacion_peligrosa == 1) %>%  group_by(especie) %>% summarise(total=n())
+inc_x_esp
+
+ggplot(train.csv)+
+  geom_bar(aes(x=as.factor(inclinacion_peligrosa),fill=as.factor(inclinacion_peligrosa)))+
+  theme_dark()+
+  facet_wrap(~especie)+
+  theme(axis.text.y = element_text(vjust = 0.5, hjust=1), legend.position = "none")
+
+```
+
+
+```{r}
+###### EJERCICIO 3 ######
+
+# Generar un histograma de frecuencia para la variable circ_tronco_cm. Probar con diferentes números de bins. 
+hist(x=trainset$circ_tronco_cm, main = "Histograma de frecuencia para la variable circ_tronco_cm", 
+     xlab = "circ_tronco_cm", ylab = "Frecuencia",col = "purple")
+
+# Repetir pero separando por la clase de la variable inclinación_peligrosa
+fil <- treedataset %>% filter(inclinacion_peligrosa == 1) 
+hist(x=fil$circ_tronco_cm, main = "Histograma de frecuencia para circ_tronco_cm con inclinacion peligrosa", 
+     xlab = "circ_tronco_cm", ylab = "Frecuencia",col = "purple")
+
+# Crear una nueva variable circ_tronco_cm_cat a partir circ_tronco_cm
+# en donde puedan asignarse valores [ muy alto, alto, medio, bajo ]..
+trainset <- treedataset %>% mutate(circ_tronco_cm_cat= ifelse(`circ_tronco_cm`<=100,'Bajo',
+                                                               ifelse(`circ_tronco_cm` <= 200, 'Medio',
+                                                                      ifelse(`circ_tronco_cm`<= 300, 'Alto','Muy alto'))))
+trainset
+
+# Guardar el nuevo dataframe
+write.csv(trainset,"arbolado-publico-mendoza-2021-circ_tronco_cm-train.csv")
+```
+
+
+```{r}
+###### EJERCICIO 4 ######
+
+t <- read_csv("C:/Ciencias de la Computacion/Inteligencia Artificial I/Trabajo Practico 7/arbolado-publico-mendoza-2021-validation.csv")
+# Implementar función que genere una columna prediction_prob con un valor aleatorio entre 0 y 1
+rows <- nrow(t) # número de filas
+# Generar números aleatoriamente
+t$prediction_prob  <- runif(rows, 0, 1)
+#str(t)
+#t
+
+# Implementar una función de nombre random_classifier, que reciba como parámetro  el dataframe generado con anterioridad y a partir de la columna predictions_prob genere una nueva columna prediction_class bajo el siguiente criterio:
+# If predictions_prob > 0.5 then prediction_class=1 else prediction_class=0
+# La función deberá devolver el dataframe original junto a la nueva columna generada.
+random_classifier <- function(dataframe) {
+  # Assign a class to each element based on the random prediction for that element.
+  dataframe <- dataframe %>% mutate(prediction_class = ifelse(prediction_prob > 0.5, 1 ,0))
+  return(dataframe)
+}
+
+#dt = random_classifier(dataframe=treedataset)
+#str(dt)
+#dt
+
+# Cargar el archivo arbolado-publico-mendoza-2021-validation.csv como un data.frame y aplicarle la función random_classifier
+
+#t <- read_csv("C:/Ciencias de la Computacion/Inteligencia Artificial I/Trabajo Practico 7/arbolado-publico-mendoza-2021-validation.csv")
+f <- random_classifier(t)
+#f
+
+# A partir de la columna recientemente generada y la columna actual calcular:
+
+# Número de árboles CON inclinación peligrosa correctamente predecidos como peligrosos por el modelo/algoritmo. (True Positive)
+TruePositive <- f %>% filter(inclinacion_peligrosa == 1 & prediction_class == 1) %>% nrow()
+# Número de árboles SIN inclinación peligrosa correctamente predecidos como no peligrosos por el modelo. (True Negative)
+TrueNegative <- f %>% filter(inclinacion_peligrosa == 0 & prediction_class == 0) %>% nrow() 
+# Número de árboles SIN inclinación peligrosa incorrectamente predecidos como peligrosos según el modelo. (False Positives)
+FalsePositive <- f %>% filter(inclinacion_peligrosa == 0 & prediction_class == 1) %>% nrow() 
+# Número de árboles CON inclinación peligrosa incorrectamente predecidos como no peligrosos según el modelo. (False Negatives)
+FalseNegative <- f %>% filter(inclinacion_peligrosa == 1 & prediction_class == 0) %>% nrow()
+n = TruePositive + TrueNegative + FalsePositive + FalseNegative 
+  
+confusion_matrix <- data.frame (rbind(c(n,"Pedicted No ", "Pedicted Si"), c("Actual No ", TrueNegative, FalsePositive), c("Actual Si ", FalseNegative, TruePositive)))
+
+confusion_matrix
+
+```
+
+```{r}
+###### EJERCICIO 5 ######
+
+# Implementar una función: biggerclass_classifier, que reciba como parámetro el dataframe generado con anterioridad nueva columna prediction_class en donde se asigne siempre de la clase mayoritaria
+# La función deberá devolver el dataframe original junto a la nueva columna generada.
+
+biggerclass_classifier <- function(dataframe) {
+  inc <- dataframe %>% group_by(inclinacion_peligrosa) %>% summarise(total=n()) #Arboles con inclinacion 1
+  mayor <- inc[order(-inc$total, decreasing = TRUE), ]$inclinacion_peligrosa[1]
+  dataframe$prediction_class <- mayor
+  return(dataframe)
+}
+
+# Repetir los puntos 4.c y 4.d pero aplicando la nueva función biggerclass_classifier
+
+# 4.c) Cargar el archivo arbolado-publico-mendoza-2021-validation.csv como un data.frame y aplicarle la función random_classifier
+u <- read_csv("C:/Ciencias de la Computacion/Inteligencia Artificial I/Trabajo Practico 7/arbolado-publico-mendoza-2021-validation.csv")
+e <- biggerclass_classifier(u)
+e
+
+# A partir de la columna recientemente generada y la columna actual calcular:
+
+# Número de árboles CON inclinación peligrosa correctamente predecidos como peligrosos por el modelo/algoritmo. (True Positive)
+TruePositive <- e %>% filter(inclinacion_peligrosa == 1 & prediction_class == 1) %>% nrow()
+# Número de árboles SIN inclinación peligrosa correctamente predecidos como no peligrosos por el modelo. (True Negative)
+TrueNegative <- e %>% filter(inclinacion_peligrosa == 0 & prediction_class == 0) %>% nrow() 
+# Número de árboles SIN inclinación peligrosa incorrectamente predecidos como peligrosos según el modelo. (False Positives)
+FalsePositive <- e %>% filter(inclinacion_peligrosa == 0 & prediction_class == 1) %>% nrow() 
+# Número de árboles CON inclinación peligrosa incorrectamente predecidos como no peligrosos según el modelo. (False Negatives)
+FalseNegative <- e %>% filter(inclinacion_peligrosa == 1 & prediction_class == 0) %>% nrow()
+n = TruePositive + TrueNegative + FalsePositive + FalseNegative 
+  
+confusion_matrix_a <- data.frame (rbind(c(n,"Pedicted No ", "Pedicted Si"), c("Actual No ", TrueNegative, FalsePositive), c("Actual Si ", FalseNegative, TruePositive)))
+
+confusion_matrix_a
+
+```
+
+
+```{r}
+###### EJERCICIO 6 ######
+
+# A partir de una matriz de confusión es posible calcular distintas métricas que nos permiten determinar la calidad del modelo de clasificación. 
+# Utilizar la siguiente imagen como guía crear funciones para calcular: Accuracy, Precision, Sensitivity, Specificity.
+
+metricas <- function(m){
+  TruePositive <- m %>% filter(inclinacion_peligrosa == 1 & prediction_class == 1) %>% nrow()
+  TrueNegative <- m %>% filter(inclinacion_peligrosa == 0 & prediction_class == 0) %>% nrow() 
+  FalsePositive <- m %>% filter(inclinacion_peligrosa == 0 & prediction_class == 1) %>% nrow() 
+  FalseNegative <- m %>% filter(inclinacion_peligrosa == 1 & prediction_class == 0) %>% nrow()
+  n = TruePositive + TrueNegative + FalsePositive + FalseNegative 
+  Specifity <- TruePositive / (TruePositive + FalseNegative)
+  Sensitivity <- TrueNegative/ (TrueNegative + FalsePositive)
+  Accuracy <- ((TruePositive + TrueNegative) / n )
+  Precision <- (TruePositive / (TruePositive + FalsePositive))
+
+  t <- c('True Positive', 'True Negative', 'False Positive', 'False Negative', 'Accuracy', 'Precision', 'Sensitivity', 'Specifity')
+  v <- c(TruePositive, TrueNegative, FalsePositive, FalseNegative, Accuracy, Precision, Sensitivity, Specifity)
+  return(data.frame(t, v))
+}
+
+# Calcularlas para las matrices de confusión generadas en los puntos 4 y 5.
+metricas(f)
+metricas(e)
+
+```
+
