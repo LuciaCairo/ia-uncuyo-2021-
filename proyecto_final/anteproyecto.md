@@ -20,7 +20,9 @@ Se consultó el libro AIMA 3rd Edition y AIMA 2da Edition (en español)
 ### Código del proyecto: 
 
 HC_Tareas (Organización de tareas con el algoritmo Hill-Climbing)
+
 SA_Tareas (Organización de tareas con el algoritmo Simulated Annealing)
+
 AG_Tareas (Organización de tareas con el Algoritmo Genético)
 
 ### Justificación: 
@@ -31,17 +33,30 @@ Dado que tratamos con un problema de optimización, se pueden aplicar algoritmos
 ### Listado de actividades a realizar:
 
 Actividad 1. Recopilación de información y/o ejemplos del problema a resolver. [2 días]
+
 Actividad 2. Planteo del problema inicial (crear datos de las tareas). [1 día]
+
 Actividad 3. Puesta a punto del código con Hill-Climbing   [4 días]
+
 Actividad 4. Puesta a punto del código con Simulated Annealing . [4 días]
+
 Actividad 5. Puesta a punto del código con Algoritmos Genéticos  [4 días]
+
 Actividad 6. Ejecución de los experimentos con los distintos parámetros. [2 días]
+
 Actividad 7. Recopilación de los resultados. [1 día]
+
 Actividad 8. Ordenar los resultados. [1 día]
+
 Actividad 9. Análisis y comparación de los resultados. [1 día]
+
 Actividad 10. Elaboración de conclusiones a partir de los resultados. [2 día]
+
 Actividad 11. Escritura de informe final. [5 días]
 
 ### Cronograma estimado de actividades:
+
+![image](https://user-images.githubusercontent.com/88351747/139602774-d802ca6a-db8b-44f3-a792-0abc47b12ce5.png)
+
 
 
