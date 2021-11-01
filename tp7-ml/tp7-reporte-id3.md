@@ -4,13 +4,13 @@ El aprendizaje basado en árboles de decisión utiliza un árbol de decisión co
 
 En los modelos de regresión se intenta predecir el valor de una variable en función de otras variables que son independientes entre sí. Por ejemplo, queremos predecir el precio de venta del terreno en función de variables como su localización, superficie, distancia a la playa, etc. El posible resultado no forma parte de un conjunto predefinido, sino que puede tomar cualquier posible valor.
 
-### Arboles de Regressión vs. Arboles de Clasificación
-
-![image](https://user-images.githubusercontent.com/88351747/139615056-c0772aac-7e0e-462e-a417-e7ecc2952cfd.png)
-
 ### Idea intuitiva
 
 En términos generales, en el entrenamiento de un árbol de regresión, las observaciones se van distribuyendo por bifurcaciones (nodos) generando la estructura del árbol hasta alcanzar un nodo terminal. Cuando se quiere predecir una nueva observación, se recorre el árbol acorde al valor de sus predictores hasta alcanzar uno de los nodos terminales. La predicción del árbol es la media de la variable respuesta de las observaciones de entrenamiento que están en ese mismo nodo terminal.
+
+### Arboles de Regressión vs. Arboles de Clasificación
+
+![image](https://user-images.githubusercontent.com/88351747/139615056-c0772aac-7e0e-462e-a417-e7ecc2952cfd.png)
 
 ### Ejemplo
 
