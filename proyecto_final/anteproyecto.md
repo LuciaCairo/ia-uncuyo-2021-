@@ -23,15 +23,14 @@ Para comparar los algoritmos vamos a realizar distintas pruebas combinando difer
 Alcance: Los algoritmos que implementaremos serán probados en conjuntos de tareas que se generarán de manera aleatoria. Luego, se desarrollará una comparación de los resultados de los tres algoritmos, determinando cuál algoritmo es el más eficiente.
 
 Limitaciones: Los algoritmos de búsqueda local en inteligencia artificial, que son los investigados y puestos en práctica en este trabajo, presentan la desventaja de que pueden caer en un mínimo o máximo local y no salir de allí, considerando esta como la mejor solución .
+
+**Bibliografia**
+
 Se consultó el libro AIMA 3rd Edition y AIMA 2da Edition (en español)
 
 ### Código del proyecto: 
 
-**HC_Tareas** (Organización de tareas con el algoritmo Hill-Climbing)
-
-**SA_Tareas** (Organización de tareas con el algoritmo Simulated Annealing)
-
-**AG_Tareas** (Organización de tareas con el Algoritmo Genético)
+**BL_Organizacion-Tareas** (Organización de tareas con algoritmos de busqueda local)
 
 ### Justificación: 
 
